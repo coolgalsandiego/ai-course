@@ -48,11 +48,11 @@ resource "azurerm_cognitive_deployment" "gpt-4o" {
   cognitive_account_id = azurerm_cognitive_account.openai[each.key].id
 
   sku {
-    name = "GlobalStandard" # "Standard" # DataZoneStandard, GlobalBatch, GlobalStandard and ProvisionedManaged
+    name     = "GlobalStandard" # "Standard" # DataZoneStandard, GlobalBatch, GlobalStandard and ProvisionedManaged
+    capacity = 20
     # tier = Free, Basic, Standard, Premium, Enterprise
     # size = ""
     # family = ""
-    capacity = 20
   }
 
   model {
