@@ -52,7 +52,7 @@ resource "azurerm_cognitive_deployment" "gpt-4o" {
     # tier = Free, Basic, Standard, Premium, Enterprise
     # size = ""
     # family = ""
-    # capacity = 0
+    capacity = 20
   }
 
   model {
