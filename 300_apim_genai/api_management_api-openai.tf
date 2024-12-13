@@ -66,9 +66,9 @@ resource "azapi_update_resource" "circuit-breaker" {
   }
 }
 
-resource "azapi_resource" "backend-pool" {
+resource "azapi_resource" "openai-backend-pool" {
   type                      = "Microsoft.ApiManagement/service/backends@2024-06-01-preview"
-  name                      = "backend-pool"
+  name                      = "openai-backend-pool"
   parent_id                 = azurerm_api_management.apim.id
   schema_validation_enabled = false
 
@@ -94,9 +94,7 @@ resource "azurerm_api_management_api_policy" "policy" {
   api_management_name = azurerm_api_management_api.api-azure-openai.api_management_name
   resource_group_name = azurerm_api_management_api.api-azure-openai.resource_group_name
 
-  xml_content = file("policy.xml")
-
-  depends_on = [azurerm_api_management_backend.openai]
+  xml_content = replace(file("policy.xml"), "{backend-id}", azapi_resource.openai-backend-pool.name)
 }
 
 resource "azurerm_api_management_subscription" "openai-subscription" {
