@@ -5,6 +5,13 @@ resource "azurerm_resource_group" "rg" {
   location = "swedencentral"
 }
 
+resource "azurerm_ai_services" "ai-services" {
+  name                = "ai-services"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku_name            = "S0"
+}
+
 resource "azurerm_cognitive_account" "cognitive-account" {
   name                = "azure-openai-swc"
   location            = azurerm_resource_group.rg.location
@@ -42,3 +49,34 @@ resource "azurerm_cognitive_deployment" "gpt-4o" {
     type = "Standard"
   }
 }
+
+# resource "azapi_resource" "this" {
+#   type     = "Microsoft.MachineLearningServices/workspaces@2023-02-01-preview"
+#   name     = var.machine_learning_workspace_name
+#   location = var.location
+#   identity {
+#     type = "SystemAssigned"
+#   }
+#   parent_id                 = var.resource_group_id
+#   schema_validation_enabled = false # requiered for now
+#   body = jsonencode({
+#     properties = {
+#       kind                = "Hub"
+#       friendlyName        = var.machine_learning_workspace_name
+#       keyVault            = var.key_vault_id
+#       applicationInsights = var.appi_id
+#       containerRegistry   = var.acr_id
+#       storageAccount      = var.storage_account_id
+#       managedNetwork = {
+#         isolationMode = "Disabled"
+#       }
+#       workspaceHubConfig = {
+#         defaultWorkspaceResourceGroup = var.resource_group_id
+#       }
+#       publicNetworkAccess = "Enabled"
+#     }
+#   })
+# }
+
+
+# https://github.com/Azure-Samples/azuresandbox/blob/main/extras/terraform-azurerm-aistudio/020-aistudio.tf

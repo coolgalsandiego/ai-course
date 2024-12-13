@@ -1,5 +1,5 @@
 name: ai-service-connection
 type: azure_ai_services
-endpoint: https://swedencentral.api.cognitive.microsoft.com/
-api_key: d39d43c3662543bfbfa84a8940f00b06
-ai_services_resource_id: /subscriptions/38977b70-47bf-4da5-a492-88712fce8725/resourceGroups/rg-openai-course/providers/Microsoft.CognitiveServices/accounts/ai-services-swc-course
+endpoint: "https://swedencentral.api.cognitive.microsoft.com/"
+api_key: "bf82fd228d3e423c8ef154051498b660"
+ai_services_resource_id: "/subscriptions/dcef7009-6b94-4382-afdc-17eb160d709a/resourceGroups/rg-openai-rag-swc-dev/providers/Microsoft.CognitiveServices/accounts/ai-services-swc-course"
