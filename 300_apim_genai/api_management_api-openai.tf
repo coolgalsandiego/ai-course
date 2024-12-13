@@ -13,7 +13,8 @@ resource "azurerm_api_management_api" "api-azure-openai" {
 
   import {
     content_format = "openapi-link"
-    content_value  = "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/cognitiveservices/data-plane/AzureOpenAI/inference/stable/2024-02-01/inference.json"
+    content_value = "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/refs/heads/main/specification/cognitiveservices/data-plane/AzureOpenAI/inference/stable/2024-10-21/inference.json"
+    # content_value  = "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/cognitiveservices/data-plane/AzureOpenAI/inference/stable/2024-02-01/inference.json"
   }
 
   # subscription_key_parameter_names {
@@ -79,7 +80,7 @@ resource "azapi_resource" "openai-backend-pool" {
         services = [
           for k, v in var.openAIConfig :
           {
-            id       = "/backends/${azurerm_api_management_backend.openai[k].name}"
+            id       = azurerm_api_management_backend.openai[k].id # "/backends/${azurerm_api_management_backend.openai[k].name}"
             priority = v.priority
             weight   = v.weight
           }
