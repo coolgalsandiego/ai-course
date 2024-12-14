@@ -35,7 +35,7 @@ resource "azurerm_api_management_backend" "openai" {
 resource "azapi_update_resource" "apim-backend-circuit-breaker" {
   for_each = var.openai_config
 
-  type        = "Microsoft.ApiManagement/service/backends@2024-05-01"
+  type        = "Microsoft.ApiManagement/service/backends@2023-09-01-preview" # 2024-06-01-preview"
   resource_id = azurerm_api_management_backend.openai[each.key].id
 
   body = {
@@ -67,7 +67,7 @@ resource "azapi_update_resource" "apim-backend-circuit-breaker" {
 }
 
 resource "azapi_resource" "apim-backend-pool" {
-  type                      = "Microsoft.ApiManagement/service/backends@2024-05-01"
+  type                      = "Microsoft.ApiManagement/service/backends@2023-09-01-preview" # 2024-06-01-preview"
   name                      = "openai-backend-pool"
   parent_id                 = azurerm_api_management.apim.id
   schema_validation_enabled = false
@@ -102,6 +102,6 @@ resource "azurerm_api_management_subscription" "openai-subscription" {
   resource_group_name = azurerm_api_management.apim.resource_group_name
   display_name        = "openai-subscription"
   api_id              = azurerm_api_management_api.api-azure-openai.id
-  allow_tracing       = true
+  allow_tracing       = false
   state               = "active"
 }
