@@ -29,13 +29,13 @@ resource "azurerm_api_management_backend" "openai" {
   resource_group_name = azurerm_api_management.apim.resource_group_name
   api_management_name = azurerm_api_management.apim.name
   protocol            = "http"
-  url                 = "${azurerm_ai_services.ai-services[each.key].endpoint}openai" # "${azurerm_cognitive_account.openai[each.key].endpoint}openai"
+  url                 = "${azurerm_ai_services.ai-services[each.key].endpoint}openai"
 }
 
 resource "azapi_update_resource" "apim-backend-circuit-breaker" {
-  for_each = var.openAIConfig
+  for_each = var.openai_config
 
-  type        = "Microsoft.ApiManagement/service/backends@2024-06-01-preview"
+  type        = "Microsoft.ApiManagement/service/backends@2024-05-01"
   resource_id = azurerm_api_management_backend.openai[each.key].id
 
   body = {
@@ -67,7 +67,7 @@ resource "azapi_update_resource" "apim-backend-circuit-breaker" {
 }
 
 resource "azapi_resource" "apim-backend-pool" {
-  type                      = "Microsoft.ApiManagement/service/backends@2024-06-01-preview"
+  type                      = "Microsoft.ApiManagement/service/backends@2024-05-01"
   name                      = "openai-backend-pool"
   parent_id                 = azurerm_api_management.apim.id
   schema_validation_enabled = false
@@ -77,7 +77,7 @@ resource "azapi_resource" "apim-backend-pool" {
       type = "Pool"
       pool = {
         services = [
-          for k, v in var.openAIConfig :
+          for k, v in var.openai_config :
           {
             id       = azurerm_api_management_backend.openai[k].id
             priority = v.priority
