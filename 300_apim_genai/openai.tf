@@ -51,7 +51,7 @@ resource "azurerm_cognitive_deployment" "gpt-4o" {
 
   sku {
     name     = "GlobalStandard" # "Standard" # DataZoneStandard, GlobalBatch, GlobalStandard and ProvisionedManaged
-    capacity = 20
+    capacity = 8 # (8k tokens per minute) to showcase the retry logic in the load balancer
     # tier = Free, Basic, Standard, Premium, Enterprise
     # size = ""
     # family = ""
