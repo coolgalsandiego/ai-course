@@ -7,14 +7,13 @@ resource "azurerm_api_management_api" "api-azure-openai" {
   display_name          = "OpenAI"
   path                  = "openai"
   protocols             = ["https"]
-  service_url           = null # "https://${azurerm_linux_function_app.function-linux-container.default_hostname}/api"
+  service_url           = null
   subscription_required = false
   api_type              = "http"
 
   import {
     content_format = "openapi-link"
     content_value = "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/refs/heads/main/specification/cognitiveservices/data-plane/AzureOpenAI/inference/stable/2024-10-21/inference.json"
-    # content_value  = "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/cognitiveservices/data-plane/AzureOpenAI/inference/stable/2024-02-01/inference.json"
   }
 
   # subscription_key_parameter_names {
@@ -24,16 +23,16 @@ resource "azurerm_api_management_api" "api-azure-openai" {
 }
 
 resource "azurerm_api_management_backend" "openai" {
-  for_each = var.openAIConfig
+  for_each = var.openai_config
 
   name                = each.value.name
   resource_group_name = azurerm_api_management.apim.resource_group_name
   api_management_name = azurerm_api_management.apim.name
   protocol            = "http"
-  url                 = "${azurerm_cognitive_account.openai[each.key].endpoint}openai"
+  url                 = "${azurerm_ai_services.ai-services[each.key].endpoint}openai" # "${azurerm_cognitive_account.openai[each.key].endpoint}openai"
 }
 
-resource "azapi_update_resource" "circuit-breaker" {
+resource "azapi_update_resource" "apim-backend-circuit-breaker" {
   for_each = var.openAIConfig
 
   type        = "Microsoft.ApiManagement/service/backends@2024-06-01-preview"
@@ -67,7 +66,7 @@ resource "azapi_update_resource" "circuit-breaker" {
   }
 }
 
-resource "azapi_resource" "openai-backend-pool" {
+resource "azapi_resource" "apim-backend-pool" {
   type                      = "Microsoft.ApiManagement/service/backends@2024-06-01-preview"
   name                      = "openai-backend-pool"
   parent_id                 = azurerm_api_management.apim.id
@@ -80,7 +79,7 @@ resource "azapi_resource" "openai-backend-pool" {
         services = [
           for k, v in var.openAIConfig :
           {
-            id       = azurerm_api_management_backend.openai[k].id # "/backends/${azurerm_api_management_backend.openai[k].name}"
+            id       = azurerm_api_management_backend.openai[k].id
             priority = v.priority
             weight   = v.weight
           }
@@ -95,7 +94,7 @@ resource "azurerm_api_management_api_policy" "policy" {
   api_management_name = azurerm_api_management_api.api-azure-openai.api_management_name
   resource_group_name = azurerm_api_management_api.api-azure-openai.resource_group_name
 
-  xml_content = replace(file("policy.xml"), "{backend-id}", azapi_resource.openai-backend-pool.name)
+  xml_content = replace(file("policy.xml"), "{backend-id}", azapi_resource.apim-backend-pool.name)
 }
 
 resource "azurerm_api_management_subscription" "openai-subscription" {
@@ -106,14 +105,3 @@ resource "azurerm_api_management_subscription" "openai-subscription" {
   allow_tracing       = true
   state               = "active"
 }
-
-# resource "azurerm_api_management_api_operation" "operation-azure-function-get" {
-#   operation_id        = "api-demo-get"
-#   api_name            = azurerm_api_management_api.api-azure-function.name
-#   api_management_name = azurerm_api_management_api.api-azure-function.api_management_name
-#   resource_group_name = azurerm_api_management_api.api-azure-function.resource_group_name
-#   display_name        = "Demo API GET"
-#   method              = "GET"
-#   url_template        = "/"
-#   description         = "GET returns sample JSON file."
-# }
