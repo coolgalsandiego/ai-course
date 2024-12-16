@@ -1,6 +1,6 @@
 terraform {
 
-  required_version = ">= 1.7"
+  required_version = ">=1.6"
 
   required_providers {
     azurerm = {
@@ -24,5 +24,4 @@ provider "azurerm" {
 }
 
 provider "azapi" {
-  subscription_id = "dcef7009-6b94-4382-afdc-17eb160d709a"
 }
