@@ -25,3 +25,11 @@ output "apim_subscription_key_3" {
   value     = azurerm_api_management_subscription.apim-subscription-3.primary_key
   sensitive = true
 }
+
+output "app_insights_resource_name" {
+  value = azurerm_application_insights.app-insights.name
+}
+
+output "resource_group_name" {
+  value = azurerm_resource_group.rg.name
+}
