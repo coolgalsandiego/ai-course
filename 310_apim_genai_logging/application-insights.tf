@@ -4,4 +4,6 @@ resource "azurerm_application_insights" "app-insights" {
   resource_group_name = azurerm_resource_group.rg.name
   application_type    = "web"
   workspace_id        = azurerm_log_analytics_workspace.log-analytics.id
+  sampling_percentage = null
+  retention_in_days   = 30
 }

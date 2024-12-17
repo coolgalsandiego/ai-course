@@ -11,7 +11,7 @@
             <dimension name="Subscription ID" value="@(context.Subscription.Id)" />
             <dimension name="Client IP" value="@(context.Request.IpAddress)" />
             <dimension name="API ID" value="@(context.Api.Id)" />
-            <dimension name="User ID" value="@(context.Request.Headers.GetValueOrDefault(" x-user-id", " N/ A"))" />
+            <dimension name="User ID" value="@(context.Request.Headers.GetValueOrDefault("x-user-id", "N/A"))" />
         </azure-openai-emit-token-metric>
     </inbound>
     <backend>

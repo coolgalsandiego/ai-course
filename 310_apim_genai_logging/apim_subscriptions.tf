@@ -4,6 +4,7 @@ resource "azurerm_api_management_subscription" "apim-subscription-1" {
   resource_group_name = azurerm_api_management.apim.resource_group_name
   api_id              = azurerm_api_management_api.api-azure-openai.id
   allow_tracing       = true
+  state               = "active"
 }
 
 resource "azurerm_api_management_subscription" "apim-subscription-2" {
@@ -12,6 +13,7 @@ resource "azurerm_api_management_subscription" "apim-subscription-2" {
   resource_group_name = azurerm_api_management.apim.resource_group_name
   api_id              = azurerm_api_management_api.api-azure-openai.id
   allow_tracing       = true
+  state               = "active"
 }
 
 resource "azurerm_api_management_subscription" "apim-subscription-3" {
@@ -20,4 +22,5 @@ resource "azurerm_api_management_subscription" "apim-subscription-3" {
   resource_group_name = azurerm_api_management.apim.resource_group_name
   api_id              = azurerm_api_management_api.api-azure-openai.id
   allow_tracing       = true
+  state               = "active"
 }

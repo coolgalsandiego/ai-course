@@ -8,7 +8,7 @@ resource "azurerm_api_management_api" "api-azure-openai" {
   path                  = "openai"
   protocols             = ["https"]
   service_url           = null
-  subscription_required = false
+  subscription_required = true
   api_type              = "http"
 
   import {
@@ -16,13 +16,13 @@ resource "azurerm_api_management_api" "api-azure-openai" {
     content_value = "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/refs/heads/main/specification/cognitiveservices/data-plane/AzureOpenAI/inference/stable/2024-10-21/inference.json"
   }
 
-  # subscription_key_parameter_names {
-  #   header = "api-key"
-  #   query  = "api-key"
-  # }
+  subscription_key_parameter_names {
+    header = "api-key"
+    query  = "api-key"
+  }
 }
 
-resource "azurerm_api_management_backend" "openai" {
+resource "azurerm_api_management_backend" "apim-backend-openai" {
   for_each = var.openai_config
 
   name                = each.value.name
@@ -35,8 +35,8 @@ resource "azurerm_api_management_backend" "openai" {
 resource "azapi_update_resource" "apim-backend-circuit-breaker" {
   for_each = var.openai_config
 
-  type        = "Microsoft.ApiManagement/service/backends@2023-09-01-preview" # 2024-06-01-preview"
-  resource_id = azurerm_api_management_backend.openai[each.key].id
+  type        = "Microsoft.ApiManagement/service/backends@2023-09-01-preview"
+  resource_id = azurerm_api_management_backend.apim-backend-openai[each.key].id
 
   body = {
     properties = {
@@ -79,7 +79,7 @@ resource "azapi_resource" "apim-backend-pool" {
         services = [
           for k, v in var.openai_config :
           {
-            id       = azurerm_api_management_backend.openai[k].id
+            id       = azurerm_api_management_backend.apim-backend-openai[k].id
             priority = v.priority
             weight   = v.weight
           }
@@ -89,7 +89,7 @@ resource "azapi_resource" "apim-backend-pool" {
   }
 }
 
-resource "azurerm_api_management_api_policy" "policy" {
+resource "azurerm_api_management_api_policy" "apim-openai-policy" {
   api_name            = azurerm_api_management_api.api-azure-openai.name
   api_management_name = azurerm_api_management_api.api-azure-openai.api_management_name
   resource_group_name = azurerm_api_management_api.api-azure-openai.resource_group_name
