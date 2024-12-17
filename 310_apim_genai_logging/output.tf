@@ -2,11 +2,6 @@ output "apim_resource_gateway_url" {
   value = azurerm_api_management.apim.gateway_url
 }
 
-output "apim_subscription_key" {
-  value     = azurerm_api_management_subscription.openai-subscription.primary_key
-  sensitive = true
-}
-
 output "app_insights_app_id" {
   value = azurerm_application_insights.app-insights.app_id
 }

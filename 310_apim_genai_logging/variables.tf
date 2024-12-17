@@ -1,7 +1,7 @@
 variable "prefix" {
   description = "Prefix to be used for all resources in this example"
   type        = string
-  default     = "310-pprod"
+  default     = "310-prod"
 }
 
 variable "openai_config" {

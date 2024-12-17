@@ -11,12 +11,12 @@ resource "azurerm_api_management_diagnostic" "apim-diagnostic" {
   http_correlation_protocol = "W3C"
 
   frontend_request {
-    body_bytes = 32
+    body_bytes = 8192
     headers_to_log = [
-      "content-type",
+      "Content-type",
       "accept",
       "origin",
-      "user-agent",
+      "User-agent",
       "x-ms-region",
       "x-ratelimit-remaining-tokens",
       "x-ratelimit-remaining-requests"
@@ -24,12 +24,12 @@ resource "azurerm_api_management_diagnostic" "apim-diagnostic" {
   }
 
   frontend_response {
-    body_bytes = 32
+    body_bytes = 8192
     headers_to_log = [
-      "content-type",
+      "Content-type",
       "accept",
       "origin",
-      "user-agent",
+      "User-agent",
       "x-ms-region",
       "x-ratelimit-remaining-tokens",
       "x-ratelimit-remaining-requests"
@@ -37,12 +37,12 @@ resource "azurerm_api_management_diagnostic" "apim-diagnostic" {
   }
 
   backend_request {
-    body_bytes = 32
+    body_bytes = 8192
     headers_to_log = [
-      "content-type",
+      "Content-type",
       "accept",
       "origin",
-      "user-agent",
+      "User-agent",
       "x-ms-region",
       "x-ratelimit-remaining-tokens",
       "x-ratelimit-remaining-requests"
@@ -50,12 +50,12 @@ resource "azurerm_api_management_diagnostic" "apim-diagnostic" {
   }
 
   backend_response {
-    body_bytes = 32
+    body_bytes = 8192
     headers_to_log = [
-      "content-type",
+      "Content-type",
       "accept",
       "origin",
-      "user-agent",
+      "User-agent",
       "x-ms-region",
       "x-ratelimit-remaining-tokens",
       "x-ratelimit-remaining-requests"
@@ -77,12 +77,12 @@ resource "azurerm_api_management_api_diagnostic" "apim-api-diagnostic" {
   http_correlation_protocol = "W3C"
 
   frontend_request {
-    body_bytes = 32
+    body_bytes = 8192
     headers_to_log = [
-      "content-type",
+      "Content-type",
       "accept",
       "origin",
-      "user-agent",
+      "User-agent",
       "x-ms-region",
       "x-ratelimit-remaining-tokens",
       "x-ratelimit-remaining-requests"
@@ -90,12 +90,12 @@ resource "azurerm_api_management_api_diagnostic" "apim-api-diagnostic" {
   }
 
   frontend_response {
-    body_bytes = 32
+    body_bytes = 8192
     headers_to_log = [
-      "content-type",
+      "Content-type",
       "accept",
       "origin",
-      "user-agent",
+      "User-agent",
       "x-ms-region",
       "x-ratelimit-remaining-tokens",
       "x-ratelimit-remaining-requests"
@@ -103,12 +103,12 @@ resource "azurerm_api_management_api_diagnostic" "apim-api-diagnostic" {
   }
 
   backend_request {
-    body_bytes = 32
+    body_bytes = 8192
     headers_to_log = [
-      "content-type",
+      "Content-type",
       "accept",
       "origin",
-      "user-agent",
+      "User-agent",
       "x-ms-region",
       "x-ratelimit-remaining-tokens",
       "x-ratelimit-remaining-requests"
@@ -116,12 +116,12 @@ resource "azurerm_api_management_api_diagnostic" "apim-api-diagnostic" {
   }
 
   backend_response {
-    body_bytes = 32
+    body_bytes = 8192
     headers_to_log = [
-      "content-type",
+      "Content-type",
       "accept",
       "origin",
-      "user-agent",
+      "User-agent",
       "x-ms-region",
       "x-ratelimit-remaining-tokens",
       "x-ratelimit-remaining-requests"

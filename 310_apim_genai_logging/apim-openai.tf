@@ -96,12 +96,3 @@ resource "azurerm_api_management_api_policy" "policy" {
 
   xml_content = replace(file("policy.xml"), "{backend-id}", azapi_resource.apim-backend-pool.name)
 }
-
-resource "azurerm_api_management_subscription" "openai-subscription" {
-  api_management_name = azurerm_api_management.apim.name
-  resource_group_name = azurerm_api_management.apim.resource_group_name
-  display_name        = "openai-subscription"
-  api_id              = azurerm_api_management_api.api-azure-openai.id
-  allow_tracing       = false
-  state               = "active"
-}
