@@ -32,12 +32,10 @@ resource "azurerm_role_assignment" "role_monitoring_reader" {
   principal_id         = azurerm_dashboard_grafana.grafana.identity.0.principal_id
 }
 
-# az grafana dashboard import -n grafana-15 --definition 16604
+# resource "terraform_data" "import-grafana-dashboard-apim" {
+#   triggers_replace = [ azurerm_dashboard_grafana.grafana.id ]
 
-resource "terraform_data" "import-grafana-dashboard-apim" {
-  triggers_replace = [ azurerm_dashboard_grafana.grafana.id ]
-
-  provisioner "local-exec" {
-    command = "az grafana dashboard import -n ${azurerm_dashboard_grafana.grafana.name} --definition 16604"
-  }
-}
+#   provisioner "local-exec" {
+#     command = "az grafana dashboard import -n ${azurerm_dashboard_grafana.grafana.name} --definition 16604"
+#   }
+# }

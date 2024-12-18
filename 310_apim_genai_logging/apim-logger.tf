@@ -6,6 +6,19 @@ resource "azurerm_api_management_logger" "apim-logger" {
   resource_id         = azurerm_application_insights.app-insights.id
 
   application_insights {
-    instrumentation_key = azurerm_application_insights.app-insights.instrumentation_key
+    connection_string = azurerm_application_insights.app-insights.connection_string
+  }
+}
+
+resource "azapi_update_resource" "enable-apim-logger-managed-identity" {
+  type        = "Microsoft.ApiManagement/service/loggers@2022-08-01"
+  resource_id = azurerm_api_management_logger.apim-logger.id
+
+  body = {
+    properties = {
+      credentials = {
+        identityClientId = "systemAssigned"
+      }
+    }
   }
 }

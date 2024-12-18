@@ -20,3 +20,9 @@ resource "azurerm_role_assignment" "Cognitive-Services-OpenAI-User" {
   role_definition_name = "Cognitive Services OpenAI User"
   principal_id         = azurerm_api_management.apim.identity.0.principal_id
 }
+
+resource "azurerm_role_assignment" "Monitoring-Metrics-Publisher" {
+  scope                = azurerm_application_insights.app-insights.id
+  role_definition_name = "Monitoring Metrics Publisher"
+  principal_id         = azurerm_api_management.apim.identity.0.principal_id
+}
