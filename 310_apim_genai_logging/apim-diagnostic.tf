@@ -76,6 +76,7 @@ resource "azurerm_api_management_api_diagnostic" "apim-api-diagnostic" {
   verbosity                 = "verbose"
   http_correlation_protocol = "W3C"
 
+
   frontend_request {
     body_bytes = 8192
     headers_to_log = [
@@ -126,5 +127,16 @@ resource "azurerm_api_management_api_diagnostic" "apim-api-diagnostic" {
       "x-ratelimit-remaining-tokens",
       "x-ratelimit-remaining-requests"
     ]
+  }
+}
+
+resource "azapi_update_resource" "enable-apim-api-diagnostic-metrics" {
+  type        = "Microsoft.ApiManagement/service/apis/diagnostics@2023-09-01-preview"
+  resource_id = azurerm_api_management_api_diagnostic.apim-api-diagnostic.id
+
+  body = {
+    properties = {
+      metrics = true
+    }
   }
 }
