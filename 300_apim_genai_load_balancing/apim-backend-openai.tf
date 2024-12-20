@@ -1,4 +1,4 @@
-resource "azurerm_api_management_backend" "apim-api-backend-openai" {
+resource "azurerm_api_management_backend" "apim-backend-openai" {
   for_each = var.openai_config
 
   name                = each.value.name
@@ -11,8 +11,8 @@ resource "azurerm_api_management_backend" "apim-api-backend-openai" {
 resource "azapi_update_resource" "apim-backend-circuit-breaker" {
   for_each = var.openai_config
 
-  type        = "Microsoft.ApiManagement/service/backends@2023-09-01-preview"
-  resource_id = azurerm_api_management_backend.apim-api-backend-openai[each.key].id
+  type        = "Microsoft.ApiManagement/service/backends@2023-09-01-preview" # 2024-06-01-preview"
+  resource_id = azurerm_api_management_backend.apim-backend-openai[each.key].id
 
   body = {
     properties = {
@@ -20,7 +20,7 @@ resource "azapi_update_resource" "apim-backend-circuit-breaker" {
         rules = [
           {
             failureCondition = {
-              count = 3
+              count = 1
               errorReasons = [
                 "Server errors"
               ]
@@ -34,7 +34,7 @@ resource "azapi_update_resource" "apim-backend-circuit-breaker" {
             }
             name             = "openAIBreakerRule"
             tripDuration     = "PT1M"
-            acceptRetryAfter = true
+            acceptRetryAfter = true // respects the Retry-After header
           }
         ]
       }
@@ -42,9 +42,9 @@ resource "azapi_update_resource" "apim-backend-circuit-breaker" {
   }
 }
 
-resource "azapi_resource" "apim-api-backend-pool-openai" {
+resource "azapi_resource" "apim-backend-pool-openai" {
   type                      = "Microsoft.ApiManagement/service/backends@2023-09-01-preview"
-  name                      = "apim-api-backend-pool-openai"
+  name                      = "apim-backend-pool"
   parent_id                 = azurerm_api_management.apim.id
   schema_validation_enabled = false
 
@@ -55,7 +55,9 @@ resource "azapi_resource" "apim-api-backend-pool-openai" {
         services = [
           for k, v in var.openai_config :
           {
-            id = azurerm_api_management_backend.apim-api-backend-openai[k].id
+            id       = azurerm_api_management_backend.apim-backend-openai[k].id
+            priority = v.priority
+            weight   = v.weight
           }
         ]
       }

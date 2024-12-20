@@ -7,17 +7,17 @@ output "app_insights_app_id" {
 }
 
 output "apim_subscription_key_1" {
-  value     = azurerm_api_management_subscription.apim-subscription-1.primary_key
+  value     = azurerm_api_management_subscription.apim-api-subscription-openai-1.primary_key
   sensitive = true
 }
 
 output "apim_subscription_key_2" {
-  value     = azurerm_api_management_subscription.apim-subscription-2.primary_key
+  value     = azurerm_api_management_subscription.apim-api-subscription-openai-2.primary_key
   sensitive = true
 }
 
 output "apim_subscription_key_3" {
-  value     = azurerm_api_management_subscription.apim-subscription-3.primary_key
+  value     = azurerm_api_management_subscription.apim-api-subscription-openai-3.primary_key
   sensitive = true
 }
 
