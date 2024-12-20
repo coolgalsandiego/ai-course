@@ -5,8 +5,8 @@ resource "azurerm_api_management" "apim" {
   publisher_name                = "My Company"
   publisher_email               = "noreply@microsoft.com"
   sku_name                      = "Developer_1" # "Consumption_0" # "Developer_1"
-  virtual_network_type          = "None"          # None, External, Internal
-  public_network_access_enabled = true            # false applies only when using private endpoint as the exclusive access method
+  virtual_network_type          = "None"        # None, External, Internal
+  public_network_access_enabled = true          # false applies only when using private endpoint as the exclusive access method
 
   identity {
     type = "SystemAssigned"
