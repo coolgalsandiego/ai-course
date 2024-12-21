@@ -7,8 +7,8 @@ resource "azurerm_api_management_api" "apim-api-openai" {
   display_name          = "OpenAI"
   path                  = "openai"
   protocols             = ["https"]
-  service_url           = null
-  subscription_required = false
+  service_url           = "${azurerm_ai_services.ai-services.endpoint}openai" # null
+  subscription_required = true
   api_type              = "http"
 
   import {
