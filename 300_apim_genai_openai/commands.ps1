@@ -1,7 +1,7 @@
-$RG = "rg-apim-genai-openai-001"
+$RG = "rg-apim-genai-openai-0017"
 $location = "swedencentral"
-$aiServiceName = "ai-genai-openai-001"
-$apimName = "apim-genai-openai-001"
+$aiServiceName = "ai-genai-openai-0017"
+$apimName = "apim-genai-openai-0017"
 
 # create Azure resource group
 az group create --name $RG --location $location
@@ -27,5 +27,24 @@ $aiServicesResourceId = $(az cognitiveservices account show --name $aiServiceNam
 az role assignment create --role "Cognitive Services OpenAI User" --assignee $apimIdentityPrincipalId --scope $aiServicesResourceId
 
 # import OpenAPI specification for OpenAI to API Management
+$aiServiceUrl = $(az cognitiveservices account show -n $aiServiceName -g $RG --query properties.endpoint -o tsv)
+az apim api import --service-name $apimName -g $RG `
+                   --display-name "OpenAI" `
+                   --path openai `
+                   --specification-url "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/refs/heads/main/specification/cognitiveservices/data-plane/AzureOpenAI/inference/stable/2024-10-21/inference.json" `
+                   --specification-format OpenApiJson `
+                   --api-type http `
+                   --protocols "https" `
+                   --service-url ${aiServiceUrl}openai `
+                   --subscription-required true `
+                   --subscription-key-header-name "api-key" `
+                   --subscription-key-query-param-name "api-key"
+
+# create subscription for API Management
+# Not supported in Azure CLI, use Azure Portal or ARM template
 
 # Add authentication to the policy
+# Not supported in Azure CLI, use Azure Portal or ARM template
+# Use the policy in file policy.xml
+
+# test the API: chatting with Chat GPT 4o model
