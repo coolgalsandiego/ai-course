@@ -1,6 +1,6 @@
 # Azure API Management with OpenAI
 
-## Introduuction
+## Introduction
 
 `Azure API Management` is a fully managed service that enables customers to publish, secure, transform, maintain, and monitor APIs. With `Azure API Management`, customers can create consistent and modern API gateways for existing back-end services hosted anywhere, secure and protect APIs from abuse and overuse, and gain insights into API usage and health.
 
