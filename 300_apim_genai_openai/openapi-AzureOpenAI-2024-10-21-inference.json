@@ -6,7 +6,7 @@
         "version": "2024-10-21"
     },
     "servers": [{
-        "url": "https://ai-services-swc-demo.cognitiveservices.azure.com/openai",
+        "url": "https://ai-services-swc-demo01.cognitiveservices.azure.com/openai",
         "variables": {
             "endpoint": {
                 "default": "your-resource-name.openai.azure.com"
