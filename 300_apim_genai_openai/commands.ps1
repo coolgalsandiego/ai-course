@@ -16,7 +16,7 @@ az cognitiveservices account create -n $aiServiceName -g $RG --kind AIServices -
 az cognitiveservices account deployment create -n $aiServiceName -g $RG `
     --deployment-name gpt-4o `
     --model-name gpt-4o `
-    --model-version "2024-08-06" `
+    --model-version "2024-11-20" `
     --model-format OpenAI `
     --sku-capacity "150" `
     --sku-name "GlobalStandard"
