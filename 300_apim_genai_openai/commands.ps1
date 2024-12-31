@@ -1,7 +1,7 @@
-$RG = "rg-apim-genai-openai-0017"
+$RG = "rg-apim-genai-openai-0019"
 $location = "swedencentral"
-$aiServiceName = "ai-genai-openai-0017"
-$apimName = "apim-genai-openai-0017"
+$aiServiceName = "ai-genai-openai-0019"
+$apimName = "apim-genai-openai-0019"
 
 # create Azure resource group
 az group create --name $RG --location $location
