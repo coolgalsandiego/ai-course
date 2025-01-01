@@ -7,7 +7,7 @@ resource "azurerm_api_management_api" "apim-api-openai" {
   display_name          = "OpenAI"
   path                  = "openai"
   protocols             = ["https"]
-  service_url           = null
+  service_url           = "${azurerm_ai_services.ai-services.endpoint}openai"
   subscription_required = true
   api_type              = "http"
 
