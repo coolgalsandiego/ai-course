@@ -9,10 +9,6 @@ resource "azurerm_ai_services" "ai-services" {
   public_network_access              = "Enabled"
   outbound_network_access_restricted = false
   custom_subdomain_name              = "${lower(each.value.name)}-${var.prefix}"
-
-  identity {
-    type = "SystemAssigned"
-  }
 }
 
 resource "azurerm_cognitive_deployment" "gpt-4o" {
@@ -29,6 +25,6 @@ resource "azurerm_cognitive_deployment" "gpt-4o" {
   model {
     format  = "OpenAI"
     name    = "gpt-4o"
-    version = "2024-08-06"
+    version = "2024-11-20"
   }
 }
