@@ -11,7 +11,7 @@ resource "azurerm_api_management_backend" "apim-backend-openai" {
 resource "azapi_update_resource" "apim-backend-circuit-breaker" {
   for_each = var.openai_config
 
-  type        = "Microsoft.ApiManagement/service/backends@2023-09-01-preview" # 2024-06-01-preview"
+  type        = "Microsoft.ApiManagement/service/backends@2023-09-01-preview"
   resource_id = azurerm_api_management_backend.apim-backend-openai[each.key].id
 
   body = {

@@ -10,13 +10,13 @@ variable "openai_config" {
       name     = "openai-uks",
       location = "uksouth",
       priority = 1,
-      weight   = 80
+      weight   = 70
     },
     openai-swc = {
       name     = "openai-swc",
       location = "swedencentral",
       priority = 1,
-      weight   = 10
+      weight   = 20
     },
     openai-frc = {
       name     = "openai-frc",
