@@ -3,20 +3,3 @@ variable "prefix" {
   type        = string
   default     = "320"
 }
-
-variable "openai_config" {
-  default = {
-    openai-uks = {
-      name     = "openai-uks",
-      location = "uksouth",
-    },
-    openai-swc = {
-      name     = "openai-swc",
-      location = "swedencentral",
-    },
-    openai-frc = {
-      name     = "openai-frc",
-      location = "francecentral",
-    }
-  }
-}

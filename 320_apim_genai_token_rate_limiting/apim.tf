@@ -3,7 +3,7 @@ resource "azurerm_api_management" "apim" {
   location                      = azurerm_resource_group.rg.location
   resource_group_name           = azurerm_resource_group.rg.name
   publisher_name                = "My Company"
-  publisher_email               = "noreply@microsoft.com"
+  publisher_email               = "noreply@mycompany.com"
   sku_name                      = "Developer_1" # "Consumption_0" # "Developer_1"
   virtual_network_type          = "None"        # None, External, Internal
   public_network_access_enabled = true          # false applies only when using private endpoint as the exclusive access method
@@ -14,9 +14,7 @@ resource "azurerm_api_management" "apim" {
 }
 
 resource "azurerm_role_assignment" "Cognitive-Services-OpenAI-User" {
-  for_each = var.openai_config
-
-  scope                = azurerm_ai_services.ai-services[each.key].id
+  scope                = azurerm_ai_services.ai-services.id
   role_definition_name = "Cognitive Services OpenAI User"
   principal_id         = azurerm_api_management.apim.identity.0.principal_id
 }

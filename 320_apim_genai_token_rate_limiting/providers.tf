@@ -5,11 +5,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">= 4.13.0"
-    }
-    azapi = {
-      source  = "Azure/azapi"
-      version = ">= 2.1.0"
+      version = ">= 4.14.0"
     }
   }
 }
@@ -21,7 +17,4 @@ provider "azurerm" {
       prevent_deletion_if_contains_resources = false
     }
   }
-}
-
-provider "azapi" {
 }
