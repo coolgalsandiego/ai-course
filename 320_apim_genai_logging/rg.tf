@@ -1,4 +1,4 @@
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-apim-genai-${var.prefix}"
+  name     = "rg-apim-genai-openai-${var.prefix}"
   location = "swedencentral"
 }
