@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-stack
+spec:
+  selector:
+    matchLabels:
+      app: redis-stack
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis-stack
+    spec:
+      containers:
+      - name: redis-stack
+        image: redis/redis-stack:latest
+        ports:
+        - containerPort: 6379
+        - containerPort: 8001
+        env:
+        - name: REDIS_PASSWORD
+          value: "@Aa123456789"
+          # - name: ConnectionStrings__WebAppContext
+          #   valueFrom:
+          #     configMapKeyRef:
+          #       name: mssql-connection-configmap
+          #       key: db-connection-string
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: redis-stack
+spec:
+  selector:
+    app: redis-stack
+  ports:
+  - name: redis
+    port: 6379
+    targetPort: 6379
+  - name: redis-insight
+    port: 8001
+    targetPort: 8001
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: redis-password
+type: Opaque
+data:
+  redis-password: QEFhMTIzNDU2Nzg5 # base64 encoded of @Aa123456789
