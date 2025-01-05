@@ -21,11 +21,6 @@ spec:
         env:
         - name: REDIS_PASSWORD
           value: "@Aa123456789"
-          # - name: ConnectionStrings__WebAppContext
-          #   valueFrom:
-          #     configMapKeyRef:
-          #       name: mssql-connection-configmap
-          #       key: db-connection-string
 ---
 kind: Service
 apiVersion: v1
@@ -42,11 +37,3 @@ spec:
     port: 8001
     targetPort: 8001
   type: LoadBalancer
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: redis-password
-type: Opaque
-data:
-  redis-password: QEFhMTIzNDU2Nzg5 # base64 encoded of @Aa123456789
