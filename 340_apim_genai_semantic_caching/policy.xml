@@ -1,8 +1,10 @@
 <policies>
     <inbound>
         <base />
-        <authentication-managed-identity resource="https://cognitiveservices.azure.com"
-            output-token-variable-name="managed-id-access-token" ignore-error="false" />
+        <authentication-managed-identity 
+            resource="https://cognitiveservices.azure.com"
+            output-token-variable-name="managed-id-access-token" 
+            ignore-error="false" />
         <set-header name="Authorization" exists-action="override">
             <value>@("Bearer " + (string)context.Variables["managed-id-access-token"])</value>
         </set-header>
@@ -11,7 +13,6 @@
             embeddings-backend-id="apim-backend-openai-embedding"
             embeddings-backend-auth="system-assigned"
             ignore-system-messages="false">
-            <!-- max-message-count="count" -->
         </azure-openai-semantic-cache-lookup>
     </inbound>
     <backend>

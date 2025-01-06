@@ -1,0 +1,27 @@
+Defaulting to user installation because normal site-packages is not writeable
+Collecting redisvl
+  Downloading redisvl-0.3.7-py3-none-any.whl.metadata (16 kB)
+Collecting coloredlogs (from redisvl)
+  Downloading coloredlogs-15.0.1-py2.py3-none-any.whl.metadata (12 kB)
+Collecting ml-dtypes<0.5.0,>=0.4.0 (from redisvl)
+  Downloading ml_dtypes-0.4.1-cp312-cp312-win_amd64.whl.metadata (20 kB)
+Requirement already satisfied: numpy in c:\python312\lib\site-packages (from redisvl) (1.26.4)
+Requirement already satisfied: pydantic<3,>=2 in c:\users\hodellai\appdata\roaming\python\python312\site-packages (from redisvl) (2.9.1)
+Requirement already satisfied: pyyaml in c:\users\hodellai\appdata\roaming\python\python312\site-packages (from redisvl) (6.0.2)
+Requirement already satisfied: redis>=5.0.0 in c:\users\hodellai\appdata\roaming\python\python312\site-packages (from redisvl) (5.2.1)
+Requirement already satisfied: tabulate<1,>=0.9.0 in c:\users\hodellai\appdata\roaming\python\python312\site-packages (from redisvl) (0.9.0)
+Requirement already satisfied: tenacity>=8.2.2 in c:\users\hodellai\appdata\roaming\python\python312\site-packages (from redisvl) (8.5.0)
+Requirement already satisfied: annotated-types>=0.6.0 in c:\python312\lib\site-packages (from pydantic<3,>=2->redisvl) (0.7.0)
+Requirement already satisfied: pydantic-core==2.23.3 in c:\users\hodellai\appdata\roaming\python\python312\site-packages (from pydantic<3,>=2->redisvl) (2.23.3)
+Requirement already satisfied: typing-extensions>=4.6.1 in c:\python312\lib\site-packages (from pydantic<3,>=2->redisvl) (4.12.1)
+Collecting humanfriendly>=9.1 (from coloredlogs->redisvl)
+  Downloading humanfriendly-10.0-py2.py3-none-any.whl.metadata (9.2 kB)
+Collecting pyreadline3 (from humanfriendly>=9.1->coloredlogs->redisvl)
+  Downloading pyreadline3-3.5.4-py3-none-any.whl.metadata (4.7 kB)
+Downloading redisvl-0.3.7-py3-none-any.whl (98 kB)
+Downloading ml_dtypes-0.4.1-cp312-cp312-win_amd64.whl (127 kB)
+Downloading coloredlogs-15.0.1-py2.py3-none-any.whl (46 kB)
+Downloading humanfriendly-10.0-py2.py3-none-any.whl (86 kB)
+Downloading pyreadline3-3.5.4-py3-none-any.whl (83 kB)
+Installing collected packages: pyreadline3, ml-dtypes, humanfriendly, coloredlogs, redisvl
+Successfully installed coloredlogs-15.0.1 humanfriendly-10.0 ml-dtypes-0.4.1 pyreadline3-3.5.4 redisvl-0.3.7
