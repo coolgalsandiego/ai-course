@@ -21,7 +21,7 @@ resource "azapi_resource" "apim" {
       virtualNetworkType  = "External"
       publicNetworkAccess = "Enabled"
       publicIpAddressId   = azurerm_public_ip.pip-apim.id
-      
+
       virtualNetworkConfiguration = {
         subnetResourceId = azurerm_subnet.snet-apim.id
       }
