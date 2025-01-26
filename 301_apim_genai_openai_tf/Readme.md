@@ -3,6 +3,10 @@
 ![](images/architecture.png)
 
 ```sh
+export ARM_SUBSCRIPTION_ID=(az account show --query id -o tsv) # if using Linux
+
+$env:ARM_SUBSCRIPTION_ID=(az account show --query id -o tsv)   # if using Windows
+
 terraform init
 terraform apply -auto-approve
 ```
