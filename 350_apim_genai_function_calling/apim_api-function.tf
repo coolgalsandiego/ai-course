@@ -4,20 +4,19 @@ resource "azurerm_api_management_api" "apim-api-function" {
   api_management_name   = azapi_resource.apim.name
   revision              = "1"
   display_name          = "API Function"
-  path                  = "api"
+  path                  = "weather"
   api_type              = "http" # graphql, http, soap, and websocket
-  protocols             = ["http", "https"]
-  service_url           = "https://${azurerm_linux_function_app.function.default_hostname}/api"
-  subscription_required = false
-}
+  protocols             = ["https"]
+  service_url           = "https://${azurerm_linux_function_app.function.default_hostname}/api/weather"
+  subscription_required = true
 
-resource "azurerm_api_management_api_operation" "operation-azure-function-get" {
-  operation_id        = "api-demo-get"
-  api_name            = azurerm_api_management_api.apim-api-function.name
-  api_management_name = azurerm_api_management_api.apim-api-function.api_management_name
-  resource_group_name = azurerm_api_management_api.apim-api-function.resource_group_name
-  display_name        = "Demo API GET"
-  method              = "GET"
-  url_template        = "/"
-  description         = "GET returns sample JSON file."
+  import {
+    content_format = "openapi+json"
+    content_value  = file("weather.json")
+  }
+
+  subscription_key_parameter_names {
+    header = "api-key"
+    query  = "api-key"
+  }
 }

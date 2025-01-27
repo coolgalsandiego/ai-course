@@ -34,11 +34,7 @@ resource "azurerm_linux_function_app" "function" {
   site_config {
     always_on = true
     application_stack {
-      docker {
-        registry_url = "https://index.docker.io"
-        image_name   = "houssemdocker/backend-api"
-        image_tag    = "1.0"
-      }
+      python_version = "3.11"
     }
   }
 }
