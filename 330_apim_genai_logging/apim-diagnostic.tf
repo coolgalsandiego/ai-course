@@ -1,9 +1,8 @@
 resource "azurerm_api_management_diagnostic" "apim-diagnostic" {
-  identifier               = "applicationinsights" # "azuremonitor"
-  resource_group_name      = azurerm_api_management.apim.resource_group_name
-  api_management_name      = azurerm_api_management.apim.name
-  api_management_logger_id = azurerm_api_management_logger.apim-logger.id
-
+  identifier                = "applicationinsights" # "azuremonitor"
+  resource_group_name       = azurerm_api_management.apim.resource_group_name
+  api_management_name       = azurerm_api_management.apim.name
+  api_management_logger_id  = azurerm_api_management_logger.apim-logger.id
   sampling_percentage       = 100
   always_log_errors         = true
   log_client_ip             = true
