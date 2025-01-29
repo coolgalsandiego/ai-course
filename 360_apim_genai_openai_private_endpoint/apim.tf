@@ -1,7 +1,7 @@
 # Terraform azurerm provider doesn't support yet creating API Management instances with stv2 SKU.
 resource "azapi_resource" "apim" {
   type                      = "Microsoft.ApiManagement/service@2024-06-01-preview"
-  name                      = "apim-genai-${var.prefix}"
+  name                      = "apim-genai-${random_string.random.result}-${var.prefix}"
   parent_id                 = azurerm_resource_group.rg.id
   location                  = azurerm_resource_group.rg.location
   schema_validation_enabled = true
