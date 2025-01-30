@@ -19,5 +19,5 @@ resource "azapi_resource" "project" {
     kind = "Project"
   }
 
-  response_export_values = ["id", "name", "location", "identity", "properties"]
+  response_export_values = ["id", "name", "location", "identity"] # , "properties"]
 }
