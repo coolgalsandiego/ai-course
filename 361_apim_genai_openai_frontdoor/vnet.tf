@@ -22,16 +22,23 @@ resource "azurerm_subnet" "snet-apim" {
 #   service_endpoints    = ["Microsoft.Web"]
 
   delegation {
-    name = "Microsoft.Web/serverFarms"
+    name = "Microsoft.Web/hostingEnvironments"
     service_delegation {
       actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
-      name    = "Microsoft.Web/serverFarms"
+      name    = "Microsoft.Web/hostingEnvironments"
     }
   }
+  # delegation {
+  #   name = "Microsoft.Web/serverFarms"
+  #   service_delegation {
+  #     actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+  #     name    = "Microsoft.Web/serverFarms"
+  #   }
+  # }
 }
 
-resource "azurerm_subnet" "snet-jumpbox" {
-  name                 = "snet-jumpbox"
+resource "azurerm_subnet" "snet-pe" {
+  name                 = "snet-pe"
   resource_group_name  = azurerm_virtual_network.vnet-spoke.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet-spoke.name
   address_prefixes     = ["10.0.2.0/24"]
@@ -42,4 +49,11 @@ resource "azurerm_subnet" "snet-bastion" {
   resource_group_name  = azurerm_virtual_network.vnet-spoke.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet-spoke.name
   address_prefixes     = ["10.0.3.0/24"]
+}
+
+resource "azurerm_subnet" "snet-jumpbox" {
+  name                 = "subnet-jumpbox"
+  resource_group_name  = azurerm_virtual_network.vnet-spoke.resource_group_name
+  virtual_network_name = azurerm_virtual_network.vnet-spoke.name
+  address_prefixes     = ["10.0.4.0/24"]
 }

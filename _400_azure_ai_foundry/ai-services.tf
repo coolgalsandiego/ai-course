@@ -25,6 +25,22 @@ resource "azurerm_cognitive_deployment" "gpt-4o" {
   }
 }
 
+# resource "azurerm_cognitive_deployment" "deepseek-r1" {
+#   name                 = "DeepSeek-R1"
+#   cognitive_account_id = azurerm_ai_services.ai-services.id
+
+#   sku {
+#     name     = "GlobalStandard" # "Standard" # DataZoneStandard, GlobalBatch, GlobalStandard and ProvisionedManaged
+#     capacity = 8                # (8k tokens per minute) to showcase the retry logic in the load balancer
+#   }
+
+#   model {
+#     format  = "OpenAI"
+#     name    = "DeepSeek-R1"
+#     # version = "2024-11-20"
+#   }
+# }
+
 resource "azurerm_cognitive_deployment" "text-embedding-3-large" {
   name                 = "text-embedding-3-large"
   cognitive_account_id = azurerm_ai_services.ai-services.id
