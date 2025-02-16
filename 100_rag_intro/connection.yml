@@ -1,5 +1,5 @@
 name: ai-service-connection
 type: azure_ai_services
-endpoint: "https://ai-services-rag-dev-001.cognitiveservices.azure.com/"
-api_key: "b71167df537d4f14ba92dceb3cf532cd"
-ai_services_resource_id: "/subscriptions/7ff0157f-d676-4396-b467-9600289aadb4/resourceGroups/rg-azure-openai-rag-dev-001/providers/Microsoft.CognitiveServices/accounts/ai-services-rag-dev-001"
+endpoint: 
+api_key: 
+ai_services_resource_id: 

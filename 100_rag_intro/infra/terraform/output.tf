@@ -3,7 +3,7 @@ output "azure_openai_endpoint" {
 }
 
 output "azure_openai_key" {
-  value = azurerm_ai_services.ai-services.primary_access_key
+  value     = azurerm_ai_services.ai-services.primary_access_key
   sensitive = true
 }
 
@@ -20,6 +20,6 @@ output "azure_search_service_endpoint" {
 }
 
 output "azure_search_service_admin_key" {
-  value = azurerm_search_service.search-service.primary_key
+  value     = azurerm_search_service.search-service.primary_key
   sensitive = true
 }

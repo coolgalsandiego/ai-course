@@ -1,0 +1,5 @@
+name: ai-service-connection
+type: azure_ai_services
+endpoint: "https://ai-services-001-prod.cognitiveservices.azure.com/"
+api_key: "7a6650bb83dd451cb06a46dfed29c69b"
+ai_services_resource_id: "/subscriptions/dcef7009-6b94-4382-afdc-17eb160d709a/resourceGroups/rg-azure-ai-prod/providers/Microsoft.CognitiveServices/accounts/ai-services-001-prod"

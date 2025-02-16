@@ -2,9 +2,9 @@
 
 ## Create Azure AI Search resource
 
-$rgName = "rg-azure-openai-rag-dev-001"
-$aiSearchName = "ai-search-rag-dev-001"
-$aiServiceName = "ai-services-rag-dev-001" # must be unique
+$rgName = "rg-azure-openai-rag-pprod-0015"
+$aiSearchName = "ai-search-rag-pprod-0015"
+$aiServiceName = "ai-services-rag-pprod-0015" # must be unique
 $location = "swedencentral"
 $llmDeploymentName = "gpt-4o"
 $llmModelVersion = "2024-08-06"
