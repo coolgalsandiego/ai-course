@@ -37,7 +37,7 @@ resource "azurerm_cognitive_deployment" "text-embedding-3-large" {
 
   sku {
     name     = "Standard" # "Standard" # DataZoneStandard, GlobalBatch, GlobalStandard and ProvisionedManaged
-    capacity = 8          # (8k tokens per minute) to showcase the retry logic in the load balancer
+    capacity = 350
   }
 }
 
