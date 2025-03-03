@@ -1,7 +1,7 @@
 # Create Azure AI Services and OpenAI resources
 
-$rgName = "rg-azure-ai-0011-prod"
-$aiServiceName = "ai-services-0011-prod" # should be unique
+$rgName = "rg-azure-ai-0013-prod"
+$aiServiceName = "ai-services-0013-prod" # should be unique
 $location = "swedencentral"
 $llmDeploymentName = "gpt-4o"
 $llmModelVersion = "2024-08-06"
@@ -19,7 +19,7 @@ az cognitiveservices account create -n $aiServiceName -g $rgName --kind AIServic
 az cognitiveservices account deployment create -n $aiServiceName -g $rgName `
     --deployment-name $llmDeploymentName `
     --model-name $llmDeploymentName `
-    --model-version "2024-08-06" `
+    --model-version $llmModelVersion `
     --model-format OpenAI `
     --sku-capacity "150" `
     --sku-name "GlobalStandard"
@@ -52,10 +52,8 @@ az ml connection create --file connection.yml -g $rgName --workspace-name hub-de
 
 @"
 GLOBAL_LLM_SERVICE="AzureOpenAI"
-AZURE_OPENAI_API_KEY=$api_key
 AZURE_OPENAI_ENDPOINT=$endpoint
+AZURE_OPENAI_API_KEY=$api_key
 AZURE_OPENAI_CHAT_DEPLOYMENT_NAME="$llmDeploymentName"
-AZURE_OPENAI_TEXT_DEPLOYMENT_NAME="$llmDeploymentName"
-AZURE_OPENAI_EMBEDDING_DEPLOYMENT_NAME="..."
-AZURE_OPENAI_API_VERSION="$llmModelVersion"
+AZURE_OPENAI_API_VERSION="2024-06-01"
 "@ > .env

@@ -4,9 +4,9 @@ from azure.ai.inference import ChatCompletionsClient
 from azure.ai.inference.models import SystemMessage, UserMessage
 from azure.core.credentials import AzureKeyCredential
 
-endpoint = os.getenv("AZURE_INFERENCE_SDK_ENDPOINT", "https://hubhoussem1968977252.services.ai.azure.com/models")
+endpoint = os.getenv("AZURE_INFERENCE_SDK_ENDPOINT", "https://ai-services-0013-prod.services.ai.azure.com/models")
 model_name = os.getenv("DEPLOYMENT_NAME", "gpt-4o")
-key = os.getenv("AZURE_INFERENCE_SDK_KEY", "7bsvbdOFsxHIiTYGlltHec9piPWD1TXt3ebOJGMkpV0gpe9RpljCJQQJ99BBAC5T7U2XJ3w3AAAAACOGxPuA")
+key = os.getenv("AZURE_INFERENCE_SDK_KEY", "67a4b1bc5885405c92e17b3ff938929a")
 
 client = ChatCompletionsClient(endpoint=endpoint, credential=AzureKeyCredential(key))
 
