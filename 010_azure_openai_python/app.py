@@ -16,7 +16,7 @@ response = client.complete(
     UserMessage(content="What are 3 things to visit in Seattle?")
   ],
   model = model_name,
-  max_tokens=1000
+  max_tokens=1000,
 )
 
 print(response)
