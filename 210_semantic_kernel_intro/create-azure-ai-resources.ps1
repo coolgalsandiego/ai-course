@@ -1,8 +1,8 @@
 # Create Azure AI Services and OpenAI resources
 
-$rgName = "rg-azure-ai-0013-prod"
-$aiServiceName = "ai-services-0013-prod" # should be unique
-$location = "swedencentral"
+$rgName = "rg-azure-ai-00135-prod"
+$aiServiceName = "ai-services-00135-prod" # should be unique
+$location = "francecentral"
 $llmDeploymentName = "gpt-4o"
 $llmModelVersion = "2024-08-06"
 
