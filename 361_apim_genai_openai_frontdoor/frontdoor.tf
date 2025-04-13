@@ -45,6 +45,10 @@ resource "azurerm_cdn_frontdoor_origin" "origin-apim" {
   #   location               = azurerm_resource_group.rg.location
   #   private_link_target_id = azapi_resource.apim.id
   # }
+
+  lifecycle {
+    ignore_changes = [private_link]
+  }
 }
 
 resource "azapi_update_resource" "configure-private-link-frontdoor-origin" {
