@@ -14,27 +14,29 @@ resource "azurerm_subnet" "snet-ai" {
 }
 
 resource "azurerm_subnet" "snet-apim" {
-  name                 = "snet-apim"
-  resource_group_name  = azurerm_virtual_network.vnet-spoke.resource_group_name
-  virtual_network_name = azurerm_virtual_network.vnet-spoke.name
-  address_prefixes     = ["10.0.1.0/24"]
-  
-#   service_endpoints    = ["Microsoft.Web"]
+  name                              = "snet-apim"
+  resource_group_name               = azurerm_virtual_network.vnet-spoke.resource_group_name
+  virtual_network_name              = azurerm_virtual_network.vnet-spoke.name
+  address_prefixes                  = ["10.0.1.0/24"]
+  private_endpoint_network_policies = "Disabled"
+  default_outbound_access_enabled   = true
 
-  delegation {
-    name = "Microsoft.Web/hostingEnvironments"
-    service_delegation {
-      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
-      name    = "Microsoft.Web/hostingEnvironments"
-    }
-  }
+  #   service_endpoints    = ["Microsoft.Web"]
+
   # delegation {
-  #   name = "Microsoft.Web/serverFarms"
+  #   name = "Microsoft.Web/hostingEnvironments"
   #   service_delegation {
   #     actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
-  #     name    = "Microsoft.Web/serverFarms"
+  #     name    = "Microsoft.Web/hostingEnvironments"
   #   }
   # }
+  delegation {
+    name = "Microsoft.Web/serverFarms"
+    service_delegation {
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+      name    = "Microsoft.Web/serverFarms"
+    }
+  }
 }
 
 resource "azurerm_subnet" "snet-pe" {

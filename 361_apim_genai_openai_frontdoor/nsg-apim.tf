@@ -9,34 +9,34 @@ resource "azurerm_subnet_network_security_group_association" "nsg-association" {
   network_security_group_id = azurerm_network_security_group.nsg-apim.id
 }
 
-# allow only inbound traffic from Frontdoor to API Management
-resource "azurerm_network_security_rule" "allow-inbound-frontdoor" {
-  resource_group_name         = azurerm_network_security_group.nsg-apim.resource_group_name
-  network_security_group_name = azurerm_network_security_group.nsg-apim.name
-  name                        = "allow-inbound-frontdoor"
-  access                      = "Allow"
-  priority                    = 500 # between 100 and 4096, must be unique, The lower the priority number, the higher the priority of the rule.
-  direction                   = "Inbound"
-  protocol                    = "Tcp"                    # Tcp, Udp, Icmp, Esp, Ah or * (which matches all).
-  source_address_prefix       = "AzureFrontDoor.Backend" # CIDR or source IP range or * to match any IP, Supports Tags like VirtualNetwork, AzureLoadBalancer and Internet.
-  source_port_range           = "*"                      # between 0 and 65535 or * to match any
-  destination_address_prefix  = "VirtualNetwork"
-  destination_port_range      = "80"
-}
+# # allow only inbound traffic from Frontdoor to API Management
+# resource "azurerm_network_security_rule" "allow-inbound-frontdoor" {
+#   resource_group_name         = azurerm_network_security_group.nsg-apim.resource_group_name
+#   network_security_group_name = azurerm_network_security_group.nsg-apim.name
+#   name                        = "allow-inbound-frontdoor"
+#   access                      = "Allow"
+#   priority                    = 500 # between 100 and 4096, must be unique, The lower the priority number, the higher the priority of the rule.
+#   direction                   = "Inbound"
+#   protocol                    = "Tcp"                    # Tcp, Udp, Icmp, Esp, Ah or * (which matches all).
+#   source_address_prefix       = "AzureFrontDoor.Backend" # CIDR or source IP range or * to match any IP, Supports Tags like VirtualNetwork, AzureLoadBalancer and Internet.
+#   source_port_range           = "*"                      # between 0 and 65535 or * to match any
+#   destination_address_prefix  = "VirtualNetwork"
+#   destination_port_range      = "80"
+# }
 
-resource "azurerm_network_security_rule" "allow-inbound-frontdoor-https" {
-  resource_group_name         = azurerm_network_security_group.nsg-apim.resource_group_name
-  network_security_group_name = azurerm_network_security_group.nsg-apim.name
-  name                        = "allow-inbound-frontdoor-https"
-  access                      = "Allow"
-  priority                    = 510 # between 100 and 4096, must be unique, The lower the priority number, the higher the priority of the rule.
-  direction                   = "Inbound"
-  protocol                    = "Tcp"                    # Tcp, Udp, Icmp, Esp, Ah or * (which matches all).
-  source_address_prefix       = "AzureFrontDoor.Backend" # CIDR or source IP range or * to match any IP, Supports Tags like VirtualNetwork, AzureLoadBalancer and Internet.
-  source_port_range           = "*"                      # between 0 and 65535 or * to match any
-  destination_address_prefix  = "VirtualNetwork"
-  destination_port_range      = "443"
-}
+# resource "azurerm_network_security_rule" "allow-inbound-frontdoor-https" {
+#   resource_group_name         = azurerm_network_security_group.nsg-apim.resource_group_name
+#   network_security_group_name = azurerm_network_security_group.nsg-apim.name
+#   name                        = "allow-inbound-frontdoor-https"
+#   access                      = "Allow"
+#   priority                    = 510 # between 100 and 4096, must be unique, The lower the priority number, the higher the priority of the rule.
+#   direction                   = "Inbound"
+#   protocol                    = "Tcp"                    # Tcp, Udp, Icmp, Esp, Ah or * (which matches all).
+#   source_address_prefix       = "AzureFrontDoor.Backend" # CIDR or source IP range or * to match any IP, Supports Tags like VirtualNetwork, AzureLoadBalancer and Internet.
+#   source_port_range           = "*"                      # between 0 and 65535 or * to match any
+#   destination_address_prefix  = "VirtualNetwork"
+#   destination_port_range      = "443"
+# }
 
 # resource "azurerm_network_security_rule" "allow-inbound-infra-lb" {
 #   resource_group_name         = azurerm_network_security_group.nsg-apim.resource_group_name

@@ -1,7 +1,7 @@
 resource "azurerm_cdn_frontdoor_profile" "frontdoor" {
   name                = "frontdoor-${var.prefix}"
   resource_group_name = azurerm_resource_group.rg.name
-  sku_name            = "Standard_AzureFrontDoor"
+  sku_name            = "Premium_AzureFrontDoor" # "Standard_AzureFrontDoor"
 }
 
 resource "azurerm_cdn_frontdoor_endpoint" "endpoint-apim" {
@@ -38,6 +38,31 @@ resource "azurerm_cdn_frontdoor_origin" "origin-apim" {
   priority                       = 1
   weight                         = 1000
   certificate_name_check_enabled = true
+
+  # private_link {
+  #   request_message        = "Request access for Private Link Origin CDN Frontdoor"
+  #   target_type            = "Gateway" # Error: expected private_link.0.target_type to be one of ["blob" "blob_secondary" "sites" "web"], got Gateway
+  #   location               = azurerm_resource_group.rg.location
+  #   private_link_target_id = azapi_resource.apim.id
+  # }
+}
+
+resource "azapi_update_resource" "configure-private-link-frontdoor-origin" {
+  type        = "Microsoft.Cdn/profiles/origingroups/origins@2024-09-01"
+  resource_id = azurerm_cdn_frontdoor_origin.origin-apim.id
+
+  body = {
+    properties = {
+      sharedPrivateLinkResource = {
+        privateLink = {
+          id = azapi_resource.apim.id
+        }
+        groupId             = "Gateway",
+        privateLinkLocation = azurerm_resource_group.rg.location,
+        requestMessage      = "please validate PE connection"
+      }
+    }
+  }
 }
 
 resource "azurerm_cdn_frontdoor_route" "route-apim" {
@@ -47,8 +72,8 @@ resource "azurerm_cdn_frontdoor_route" "route-apim" {
   cdn_frontdoor_origin_ids      = [azurerm_cdn_frontdoor_origin.origin-apim.id]
   supported_protocols           = ["Http", "Https"]
   patterns_to_match             = ["/*"]
-  forwarding_protocol           = "HttpsOnly"
+  forwarding_protocol           = "MatchRequest" # "HttpsOnly"
   link_to_default_domain        = true
-  https_redirect_enabled        = false
+  https_redirect_enabled        = true # false
   cdn_frontdoor_origin_path     = "/"
 }

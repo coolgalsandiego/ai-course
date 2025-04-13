@@ -24,6 +24,11 @@ output "azure_search_service_admin_key" {
   sensitive = true
 }
 
+# output "ai_foundry_project_connection_string" {
+#   value     = azurerm_ai_foundry_project.project.primary_blob_connection_string
+#   sensitive = true 
+# }
+
 output "dot_env" {
   sensitive = true
   value     = <<EOT

@@ -1,0 +1,282 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apimName": {
+            "type": "string"
+        },
+        "zones": {
+            "type": "array"
+        },
+        "location": {
+            "type": "string"
+        },
+        "tier": {
+            "type": "string"
+        },
+        "capacity": {
+            "type": "string"
+        },
+        "adminEmail": {
+            "type": "string"
+        },
+        "organizationName": {
+            "type": "string"
+        },
+        "virtualNetworkType": {
+            "type": "string"
+        },
+        "tagsByResource": {
+            "type": "object"
+        },
+        "vnet": {
+            "type": "object"
+        },
+        "customProperties": {
+            "type": "object"
+        },
+        "identity": {
+            "type": "object"
+        },
+        "appInsightsObject": {
+            "type": "object"
+        },
+        "privateDnsDeploymentName": {
+            "type": "string"
+        },
+        "subnetDeploymentName": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "apimNsgName": "[concat('apimnsg', uniqueString(resourceGroup().id), parameters('apimName'))]"
+    },
+    "resources": [
+        {
+            "location": "uksouth",
+            "name": "pe-apim",
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2020-03-01",
+            "properties": {
+                "subnet": {
+                    "id": "/subscriptions/dcef7009-6b94-4382-afdc-17eb160d709a/resourceGroups/rg-apim/providers/Microsoft.Network/virtualNetworks/vnet-apim/subnets/default"
+                },
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "pe-apim",
+                        "properties": {
+                            "privateLinkServiceId": "[resourceId('Microsoft.ApiManagement/service', parameters('apimName'))]",
+                            "groupIds": [
+                                "Gateway"
+                            ]
+                        }
+                    }
+                ]
+            },
+            "tags": {},
+            "dependsOn": [
+                "[concat('Microsoft.ApiManagement/service/', parameters('apimName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+            "apiVersion": "2020-06-01",
+            "name": "pe-apim/default",
+            "location": "uksouth",
+            "dependsOn": [
+                "[parameters('privateDnsDeploymentName')]",
+                "pe-apim",
+                "[concat('Microsoft.ApiManagement/service/', parameters('apimName'))]"
+            ],
+            "properties": {
+                "privateDnsZoneConfigs": [
+                    {
+                        "name": "privatelink-azure-api-net",
+                        "properties": {
+                            "privateDnsZoneId": "[resourceId('Microsoft.Network/privateDnsZones', 'privatelink.azure-api.net')]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[parameters('privateDnsDeploymentName')]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[concat('Microsoft.ApiManagement/service/', parameters('apimName'))]",
+                "pe-apim"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "apiVersion": "2017-05-10",
+                            "name": "PrivateDnsZone-53a19a38-14cb-4a1a-ab13-a280719b0032",
+                            "type": "Microsoft.Resources/deployments",
+                            "subscriptionId": "dcef7009-6b94-4382-afdc-17eb160d709a",
+                            "resourceGroup": "rg-apim",
+                            "properties": {
+                                "mode": "Incremental",
+                                "template": {
+                                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                                    "contentVersion": "1.0.0.0",
+                                    "resources": [
+                                        {
+                                            "type": "Microsoft.Network/privateDnsZones",
+                                            "apiVersion": "2018-09-01",
+                                            "name": "privatelink.azure-api.net",
+                                            "location": "global",
+                                            "tags": {},
+                                            "properties": {}
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "VirtualNetworkLink1744568715214",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[parameters('privateDnsDeploymentName')]",
+                "[concat('Microsoft.ApiManagement/service/', parameters('apimName'))]",
+                "pe-apim"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "apiVersion": "2017-05-10",
+                            "name": "VirtualNetworklink-53a19a38-14cb-4a1a-ab13-a280719b0033",
+                            "type": "Microsoft.Resources/deployments",
+                            "subscriptionId": "dcef7009-6b94-4382-afdc-17eb160d709a",
+                            "resourceGroup": "rg-apim",
+                            "properties": {
+                                "mode": "Incremental",
+                                "template": {
+                                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                                    "contentVersion": "1.0.0.0",
+                                    "resources": [
+                                        {
+                                            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+                                            "apiVersion": "2018-09-01",
+                                            "name": "[concat('privatelink.azure-api.net', '/', 'privatelink.azure-api.net', '-link')]",
+                                            "location": "global",
+                                            "properties": {
+                                                "virtualNetwork": {
+                                                    "id": "[resourceId('rg-apim', 'Microsoft.Network/virtualNetworks', 'vnet-apim')]"
+                                                },
+                                                "registrationEnabled": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service",
+            "apiVersion": "2023-03-01-preview",
+            "name": "[parameters('apimName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('tier')]",
+                "capacity": "[parameters('capacity')]"
+            },
+            "zones": "[parameters('zones')]",
+            "identity": "[parameters('identity')]",
+            "tags": "[parameters('tagsByResource')]",
+            "properties": {
+                "publisherEmail": "[parameters('adminEmail')]",
+                "publisherName": "[parameters('organizationName')]",
+                "customProperties": "[parameters('customProperties')]",
+                "virtualNetworkType": "[parameters('virtualNetworkType')]",
+                "virtualNetworkConfiguration": "[json(concat('{\"subnetResourceId\": \"', resourceId(parameters('vnet').resourceGroup, 'Microsoft.Network/virtualNetworks/subnets', parameters('vnet').name, parameters('vnet').selectedSubnetName), '\"}'))]"
+            },
+            "resources": [],
+            "dependsOn": []
+        }
+    ]
+}
+
+
+// {
+//     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+//     "contentVersion": "1.0.0.0",
+//     "parameters": {
+//         "apimName": {
+//             "value": "apim-standard-v2-hodell"
+//         },
+//         "location": {
+//             "value": "uksouth"
+//         },
+//         "tier": {
+//             "value": "StandardV2"
+//         },
+//         "capacity": {
+//             "value": "1"
+//         },
+//         "adminEmail": {
+//             "value": "noreply@microsoft.com"
+//         },
+//         "organizationName": {
+//             "value": "Microsoft"
+//         },
+//         "virtualNetworkType": {
+//             "value": "External"
+//         },
+//         "tagsByResource": {
+//             "value": {}
+//         },
+//         "vnet": {
+//             "value": {
+//                 "name": "vnet-apim",
+//                 "addressPrefixes": [
+//                     [
+//                         "10.0.0.0/16"
+//                     ]
+//                 ],
+//                 "selectedSubnetName": "snet-apim",
+//                 "resourceGroup": "rg-apim",
+//                 "subnetId": "/subscriptions/dcef7009-6b94-4382-afdc-17eb160d709a/resourceGroups/rg-apim/providers/Microsoft.Network/virtualNetworks/vnet-apim/subnets/snet-apim"
+//             }
+//         },
+//         "zones": {
+//             "value": []
+//         },
+//         "customProperties": {
+//             "value": {}
+//         },
+//         "identity": {
+//             "value": {
+//                 "type": "SystemAssigned"
+//             }
+//         },
+//         "appInsightsObject": {
+//             "value": {
+//                 "id": null,
+//                 "name": null
+//             }
+//         },
+//         "privateDnsDeploymentName": {
+//             "value": "PrivateDNS-1744568715213"
+//         },
+//         "subnetDeploymentName": {
+//             "value": "UpdateSubnetDeployment-1744568715213"
+//         }
+//     }
+// }

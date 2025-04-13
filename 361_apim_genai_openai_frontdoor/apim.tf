@@ -1,7 +1,7 @@
 # Terraform azurerm provider doesn't support yet creating API Management instances with stv2 SKU.
 resource "azapi_resource" "apim" {
   type                      = "Microsoft.ApiManagement/service@2024-06-01-preview"
-  name                      = "apim-genai-prm-v2-${random_string.random.result}-${var.prefix}"
+  name                      = "apim-genai-std-v2-${random_string.random.result}-${var.prefix}"
   parent_id                 = azurerm_resource_group.rg.id
   location                  = azurerm_resource_group.rg.location
   schema_validation_enabled = true
@@ -12,15 +12,15 @@ resource "azapi_resource" "apim" {
 
   body = {
     sku = {
-      name     = "PremiumV2" # "StandardV2"
+      name     = "StandardV2" # "PremiumV2" # PremiumV2 doesn't support yet Private Endpoint
       capacity = 1
     }
     properties = {
       publisherEmail      = "noreply@microsoft.com"
       publisherName       = "My Company"
-      virtualNetworkType  = "Internal"
-      publicNetworkAccess = "Enabled"
-      # publicIpAddressId   = azurerm_public_ip.pip-apim.id
+      virtualNetworkType  = "External" # "Internal" # Setting up 'Internal' Internal Virtual Network Type is not supported for Sku Type 'StandardV2'.
+      publicNetworkAccess = "Disabled"
+      publicIpAddressId   = azurerm_public_ip.pip-apim.id
 
       virtualNetworkConfiguration = {
         subnetResourceId = azurerm_subnet.snet-apim.id
