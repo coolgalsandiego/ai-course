@@ -19,7 +19,7 @@ resource "azapi_resource" "apim" {
       publisherEmail      = "noreply@microsoft.com"
       publisherName       = "My Company"
       virtualNetworkType  = "External" # "Internal" # Setting up 'Internal' Internal Virtual Network Type is not supported for Sku Type 'StandardV2'.
-      publicNetworkAccess = "Disabled"
+      publicNetworkAccess = "Enabled" # "Disabled" # Blocking all public network access by setting property `publicNetworkAccess` of API Management service is not enabled during service creation.
       publicIpAddressId   = azurerm_public_ip.pip-apim.id
 
       virtualNetworkConfiguration = {

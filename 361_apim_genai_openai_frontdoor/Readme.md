@@ -17,6 +17,8 @@ API Management service V2 outbound Virtual Network integration with SubnetId `/s
 
 Error: expected private_link.0.target_type to be one of ["blob" "blob_secondary" "sites" "web"], got Gateway.
 
+Blocking all public network access by setting property `publicNetworkAccess` of API Management service is not enabled during service creation.
+
 Starting in July 2019, Azure AI services use custom subdomain names for each resource created through the Azure portal, Azure Cloud Shell, or Azure CLI. Unlike regional endpoints, which were common for all customers in a specific Azure region, custom subdomain names are unique to the resource. Custom subdomain names are required to enable features like Microsoft Entra ID for authentication.
 Src: https://learn.microsoft.com/en-us/azure/ai-services/cognitive-services-custom-subdomains
 
