@@ -7,6 +7,7 @@ resource "azurerm_cdn_frontdoor_profile" "frontdoor" {
 resource "azurerm_cdn_frontdoor_endpoint" "endpoint-apim" {
   name                     = "endpoint-apim"
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.frontdoor.id
+  enabled                  = true
 }
 
 resource "azurerm_cdn_frontdoor_origin_group" "origin-group-apim" {
@@ -22,7 +23,7 @@ resource "azurerm_cdn_frontdoor_origin_group" "origin-group-apim" {
   health_probe {
     path                = "/"
     request_type        = "GET"
-    protocol            = "Http"
+    protocol            = "Https"
     interval_in_seconds = 60
   }
 }
@@ -58,12 +59,12 @@ resource "azapi_update_resource" "configure-private-link-frontdoor-origin" {
   body = {
     properties = {
       sharedPrivateLinkResource = {
+        groupId             = "Gateway",
+        privateLinkLocation = azurerm_resource_group.rg.location,
+        requestMessage      = "Please validate PE connection"
         privateLink = {
           id = azapi_resource.apim.id
         }
-        groupId             = "Gateway",
-        privateLinkLocation = azurerm_resource_group.rg.location,
-        requestMessage      = "please validate PE connection"
       }
     }
   }
