@@ -1,3 +1,13 @@
+resource "azurerm_public_ip" "pip-apim" {
+  name                = "pip-apim"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+  zones               = ["1"] # ["1", "2", "3"]
+  domain_name_label   = "apim-internal-${var.prefix}"
+}
+
 # Terraform azurerm provider doesn't support yet creating API Management instances with stv2 SKU.
 resource "azapi_resource" "apim" {
   type                      = "Microsoft.ApiManagement/service@2024-06-01-preview"
@@ -30,6 +40,19 @@ resource "azapi_resource" "apim" {
 
   response_export_values = ["*"]
   depends_on = [ azurerm_subnet_network_security_group_association.nsg-association ]
+}
+
+# Update APIM's publicNetworkAccess to "Disabled"
+
+resource "azapi_update_resource" "update-apim-public-network-access" {
+  type        = "Microsoft.ApiManagement/service@2024-06-01-preview"
+  resource_id = azapi_resource.apim.id
+
+  body = {
+    properties = {
+      publicNetworkAccess = "Disabled"
+    }
+  }
 }
 
 # resource "azurerm_api_management" "apim" {
