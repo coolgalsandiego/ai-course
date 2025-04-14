@@ -29,7 +29,7 @@ resource "azapi_resource" "apim" {
       publisherEmail      = "noreply@microsoft.com"
       publisherName       = "My Company"
       virtualNetworkType  = "External" # "Internal" # Setting up 'Internal' Internal Virtual Network Type is not supported for Sku Type 'StandardV2'.
-      publicNetworkAccess = "Enabled" # "Disabled" # Blocking all public network access by setting property `publicNetworkAccess` of API Management service is not enabled during service creation.
+      publicNetworkAccess = "Enabled"  # "Disabled" # Blocking all public network access by setting property `publicNetworkAccess` of API Management service is not enabled during service creation.
       publicIpAddressId   = azurerm_public_ip.pip-apim.id
 
       virtualNetworkConfiguration = {
@@ -39,21 +39,20 @@ resource "azapi_resource" "apim" {
   }
 
   response_export_values = ["*"]
-  depends_on = [ azurerm_subnet_network_security_group_association.nsg-association ]
+  depends_on             = [azurerm_subnet_network_security_group_association.nsg-association]
 }
 
-# Update APIM's publicNetworkAccess to "Disabled"
+# # Update APIM's publicNetworkAccess to "Disabled"
+# resource "azapi_update_resource" "update-apim-public-network-access" {
+#   type        = "Microsoft.ApiManagement/service@2024-06-01-preview"
+#   resource_id = azapi_resource.apim.id
 
-resource "azapi_update_resource" "update-apim-public-network-access" {
-  type        = "Microsoft.ApiManagement/service@2024-06-01-preview"
-  resource_id = azapi_resource.apim.id
-
-  body = {
-    properties = {
-      publicNetworkAccess = "Disabled"
-    }
-  }
-}
+#   body = {
+#     properties = {
+#       publicNetworkAccess = "Disabled"
+#     }
+#   }
+# }
 
 # resource "azurerm_api_management" "apim" {
 #   name                          = "apim-genai-${var.prefix}"

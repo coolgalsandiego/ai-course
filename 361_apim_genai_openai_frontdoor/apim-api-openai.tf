@@ -13,7 +13,7 @@ resource "azurerm_api_management_api" "apim-api-openai" {
 
   import {
     content_format = "openapi-link"
-    content_value = "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/refs/heads/main/specification/cognitiveservices/data-plane/AzureOpenAI/inference/stable/2024-10-21/inference.json"
+    content_value  = "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/refs/heads/main/specification/cognitiveservices/data-plane/AzureOpenAI/inference/stable/2024-10-21/inference.json"
   }
 
   subscription_key_parameter_names {
