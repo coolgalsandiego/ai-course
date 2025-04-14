@@ -59,7 +59,7 @@ resource "azurerm_cognitive_deployment" "text-embedding-3-large" {
 
 resource "azapi_resource" "serverless_endpoint_deepseek" {
   type      = "Microsoft.MachineLearningServices/workspaces/serverlessEndpoints@2024-10-01-preview"
-  parent_id = azurerm_ai_foundry_project.project.id
+  parent_id = azurerm_ai_foundry_project.ai-foundry-project.id
   name      = "DeepSeek-R1-${random_string.random.result}"
   location  = azurerm_resource_group.rg.location
 

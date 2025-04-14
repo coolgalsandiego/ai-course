@@ -2,12 +2,12 @@ output "azure_openai_endpoint" {
   value = azurerm_ai_services.ai-services.endpoint
 }
 
-output "azure_openai_key" {
+output "azure_openai_api_key" {
   value     = azurerm_ai_services.ai-services.primary_access_key
   sensitive = true
 }
 
-output "azure_openai_chat_completions_deployment_name" {
+output "azure_openai_deployment_name" {
   value = azurerm_cognitive_deployment.gpt-4o.name
 }
 

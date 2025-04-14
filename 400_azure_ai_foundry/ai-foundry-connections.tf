@@ -1,7 +1,7 @@
 resource "azapi_resource" "ai-services-connection" {
   type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-07-01-preview"
   name      = "ai-service-connection"
-  parent_id = azurerm_ai_foundry.hub.id
+  parent_id = azurerm_ai_foundry.ai-foundry-hub.id
 
   body = {
     properties = {
@@ -23,7 +23,7 @@ resource "azapi_resource" "ai-services-connection" {
 resource "azapi_resource" "search-service-connection" {
   type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-07-01-preview"
   name      = "search-service-connection"
-  parent_id = azurerm_ai_foundry.hub.id
+  parent_id = azurerm_ai_foundry.ai-foundry-hub.id
 
   body = {
     properties = {

@@ -1,5 +1,5 @@
-resource "azurerm_ai_foundry" "hub" {
-  name                         = "hub"
+resource "azurerm_ai_foundry" "ai-foundry-hub" {
+  name                         = "ai-foundry-hub"
   location                     = azurerm_ai_services.ai-services.location
   resource_group_name          = azurerm_ai_services.ai-services.resource_group_name
   storage_account_id           = azurerm_storage_account.storage.id

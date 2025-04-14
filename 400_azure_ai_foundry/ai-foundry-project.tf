@@ -1,7 +1,7 @@
-resource "azurerm_ai_foundry_project" "project" {
-  name                         = "project"
-  location                     = azurerm_ai_foundry.hub.location
-  ai_services_hub_id           = azurerm_ai_foundry.hub.id
+resource "azurerm_ai_foundry_project" "ai-foundry-project" {
+  name                         = "ai-foundry-project"
+  location                     = azurerm_ai_foundry.ai-foundry-hub.location
+  ai_services_hub_id           = azurerm_ai_foundry.ai-foundry-hub.id
   high_business_impact_enabled = false
 
   identity {

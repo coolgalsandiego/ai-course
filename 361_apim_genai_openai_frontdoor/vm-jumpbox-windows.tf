@@ -12,10 +12,10 @@ resource "azurerm_network_interface" "nic-vm-windows" {
 }
 
 resource "azurerm_windows_virtual_machine" "vm-windows" {
-  name                  = "vm-windows-w11"
+  name                  = "vm-windows11"
   resource_group_name   = azurerm_resource_group.rg.name
   location              = azurerm_resource_group.rg.location
-  size                  = "Standard_D4ads_v5" # "Standard_B2ats_v2" "Standard_D2pds_v6"
+  size                  = "Standard_D2ads_v5" # "Standard_B2ats_v2" "Standard_D2pds_v6"
   priority              = "Spot"
   eviction_policy       = "Deallocate"
   admin_username        = "azureuser"
