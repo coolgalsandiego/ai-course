@@ -18,7 +18,7 @@ terraform apply tfplan
 
 ## How to test access to GPT model ?
 
-Open and run the python notebook `test-connection-to-ai-foundry-models.ipynb` to test access to the GPT model.
+Open and run the python notebook `test-connection-to-llm-models.ipynb` to test access to the GPT model.
 
 ## Findings
 

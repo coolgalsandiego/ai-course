@@ -1,11 +1,29 @@
-# Azure API Management with OpenAI
+# Azure API Management with OpenAI and Frontdoor
 
-![](images/architecture.png)
+This repo shows how to deploy an Azure API Management service with OpenAI and Frontdoor using Terraform.
+All resources are deployed in private mode using Private Endpoint, except the Frontdoor that exposes publicly the services.
+
+## Deploy the resources
+
+This repository contains a Terraform script to deploy an Azure API Management service with OpenAI and Frontdoor.
 
 ```sh
 terraform init
-terraform apply -auto-approve
+terraform plan -out tfplan
+terraform apply tfplan
 ```
+
+ The deployment includes the following resources:
+
+![](images/resources.png)
+
+## Approving the Private Link connection
+
+After the deployment is complete, you need to approve the Private Link connection for the API Management service. You can do this using the Azure portal or Azure CLI. Navigate to Private Link Center > Pending connections and click approve.
+
+## How to test access to GPT model ?
+
+Open and run the python notebook `test-connection-to-llm-models.ipynb` to test access to the GPT model.
 
 ## Important notes
 
