@@ -21,6 +21,8 @@ terraform apply tfplan
 
 After the deployment is complete, you need to approve the Private Link connection for the API Management service. You can do this using the Azure portal or Azure CLI. Navigate to Private Link Center > Pending connections and click approve.
 
+![](images/approve-pl-connection.png)
+
 ## How to test access to GPT model ?
 
 Open and run the python notebook `test-connection-to-llm-models.ipynb` to test access to the GPT model.
