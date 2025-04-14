@@ -79,19 +79,19 @@ resource "azapi_update_resource" "configure-private-link-frontdoor-origin" {
 #   value = data.azurerm_private_endpoint_connection.example.private_service_connection[0].status
 # }
 
-# # Accept Frontdoor's private endpoint connection to APIM
-# resource "azapi_update_resource" "accept-private-link-frontdoor-origin" {
-#   type        = "Microsoft.ApiManagement/service/privateEndpointConnections@2024-06-01-preview"
-#   resource_id = azapi_resource.apim.id
+# Approve Frontdoor's private endpoint connection to APIM
+resource "azapi_update_resource" "approve-private-link-frontdoor-origin" {
+  type        = "Microsoft.ApiManagement/service/privateEndpointConnections@2024-06-01-preview"
+  resource_id = azapi_resource.apim.id
 
-#   body = {
-#     properties = {
-#       privateLinkServiceConnectionState = {
-#         status  = "Approved"
-#       }
-#     }
-#   }
-# }
+  body = {
+    properties = {
+      privateLinkServiceConnectionState = {
+        status  = "Approved"
+      }
+    }
+  }
+}
 
 resource "azurerm_cdn_frontdoor_route" "route-apim" {
   name                          = "route-apim"
